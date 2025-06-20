@@ -99,7 +99,7 @@ export default function CrosswordGrid({ theme }: CrosswordGridProps) {
   // focus and movement
   const focus = useCallback<FocusHandler>(() => {
     // console.log('CrosswordGrid.focus()', { haveRef: !!inputRef.current });
-    inputRef.current?.focus();
+    inputRef.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
