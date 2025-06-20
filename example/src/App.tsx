@@ -327,6 +327,12 @@ const Messages = styled.pre`
 function App() {
   const crossword = useRef<CrosswordImperative>(null);
 
+  useEffect(() => {
+    if (crossword.current) {
+      //crossword.current.setGuess(0,2,"F")
+    }
+  }, [crossword.current]);
+
   const focus = useCallback<React.MouseEventHandler>((event) => {
     crossword.current?.focus();
   }, []);
@@ -531,6 +537,7 @@ function App() {
           <Crossword
             ref={crossword}
             data={data}
+            useStorage={false}
             storageKey="first-example"
             onCorrect={onCorrect}
             onLoadedCorrect={onLoadedCorrect}
@@ -563,6 +570,7 @@ function App() {
             ref={crosswordProvider}
             data={data}
             storageKey="second-example"
+            useStorage={true}
             onCorrect={onCorrectProvider}
             onLoadedCorrect={onLoadedCorrectProvider}
             onCrosswordCorrect={onCrosswordCorrectProvider}
