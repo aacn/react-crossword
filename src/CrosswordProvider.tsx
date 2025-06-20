@@ -310,7 +310,7 @@ const defaultTheme: CrosswordProviderProps['theme'] = {
   cellBackground: 'rgb(255,255,255)',
   cellBorder: 'rgb(0,0,0)',
   textColor: 'rgb(0,0,0)',
-  numberColor: 'rgba(0,0,0, 0.25)',
+  numberColor: 'rgb(0,0,0)',
   focusBackground: 'rgb(255,255,0)',
   highlightBackground: 'rgb(255,255,204)',
 };
@@ -997,7 +997,6 @@ const CrosswordProvider = React.forwardRef<
             clearGuesses(storageKey || defaultStorageKey);
           }
         },
-
         /**
          * Fills all the answers in the grid and calls the `onLoadedCorrect`
          * callback with _**every**_ answer.
@@ -1007,6 +1006,7 @@ const CrosswordProvider = React.forwardRef<
             produce((draft) => {
               draft.forEach((rowData) => {
                 rowData.forEach((cellData) => {
+                  console.log(JSON.stringify(cellData));
                   if (cellData.used) {
                     cellData.guess = cellData.answer;
                   }

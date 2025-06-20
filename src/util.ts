@@ -193,11 +193,22 @@ export function saveGuesses(gridData: GuessData, storageKey: string) {
     return;
   }
 
-  const guesses = serializeGuesses(gridData);
+  const newGuesses = serializeGuesses(gridData);
+
+  // Check if ALL new guesses are empty strings
+  const allNewGuessesEmpty = Object.values(newGuesses).every(
+    (value) => value === ''
+  );
+
+  // If new data is completely empty and something already exists, abort
+  const alreadyExisting = localStorage.getItem(storageKey);
+  if (allNewGuessesEmpty && alreadyExisting !== null) {
+    return;
+  }
 
   const saveData = {
     date: Date.now(),
-    guesses,
+    guesses: newGuesses,
   };
 
   localStorage.setItem(storageKey, JSON.stringify(saveData));
@@ -245,7 +256,6 @@ export function deserializeGuesses(
     const r = parseInt(rStr, 10);
     const c = parseInt(cStr, 10);
     // ignore any out-of-bounds guesses!
-    console.log('deserializeGuesses-gd', gridData);
     if (r <= gridData.length - 1 && c <= gridData[0].length - 1) {
       (gridData[r][c] as UsedCellData).guess = val;
     }
