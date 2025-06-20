@@ -1006,7 +1006,6 @@ const CrosswordProvider = React.forwardRef<
             produce((draft) => {
               draft.forEach((rowData) => {
                 rowData.forEach((cellData) => {
-                  console.log(JSON.stringify(cellData));
                   if (cellData.used) {
                     cellData.guess = cellData.answer;
                   }

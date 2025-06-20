@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 import { CrosswordContext } from './context';
-import type { Direction, EnhancedProps } from './types';
+import type { CluesData, Direction, EnhancedProps } from './types';
 
 import Clue from './Clue';
 
@@ -23,30 +23,33 @@ const directionCluesPropTypes = {
 
 export type DirectionCluesProps = EnhancedProps<
   typeof directionCluesPropTypes,
-  { direction: Direction }
+  { direction: Direction; clues?: CluesData }
 >;
 
 export default function DirectionClues({
   direction,
   label,
+  clues,
 }: DirectionCluesProps) {
-  const { clues } = useContext(CrosswordContext);
+  const { clues: contextClues } = useContext(CrosswordContext);
 
   return (
     <div className="direction">
       {/* use something other than h3? */}
       <h3 className="header">{label || direction.toUpperCase()}</h3>
-      {clues?.[direction].map(({ number, clue, complete, correct }) => (
-        <Clue
-          key={number}
-          direction={direction}
-          number={number}
-          complete={complete}
-          correct={correct}
-        >
-          {clue}
-        </Clue>
-      ))}
+      {(clues ?? contextClues)?.[direction].map(
+        ({ number, clue, complete, correct }) => (
+          <Clue
+            key={number}
+            direction={direction}
+            number={number}
+            complete={complete}
+            correct={correct}
+          >
+            {clue}
+          </Clue>
+        )
+      )}
     </div>
   );
 }
