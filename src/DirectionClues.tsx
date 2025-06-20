@@ -15,10 +15,14 @@ import Clue from './Clue';
 
 const directionCluesPropTypes = {
   /** direction of this list of clues ("across" or "down") */
-  direction: PropTypes.string.isRequired,
+  direction: PropTypes.oneOf(['across', 'down']).isRequired,
 
   /** a label to use instead of the (English) default */
   label: PropTypes.string,
+
+  /** If loading the clues automatically fails, provide them directly. */
+  // eslint-disable-next-line react/forbid-prop-types
+  clues: PropTypes.any.isRequired,
 };
 
 export type DirectionCluesProps = EnhancedProps<
